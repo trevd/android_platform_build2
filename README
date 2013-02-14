@@ -1,0 +1,35 @@
+Build2 - Android Build System Extensions
+----------------------------------------
+
+1. The Android Build System 
+The Android Build System (https://android.googlesource.com/platform/build/) add custom 
+functions to the shell environment to help manage the AOSP source tree. 
+
+This is enabled using the "source build/envsetup.sh".
+
+2. Modifying the Android Core Projects ( or Why Forking AOSP Repo's is a bad idea )
+Unless you have commit rights or are an active contributor to the AOSP project you
+can often find your changes made to the main AOSP projects are made obsolete or become
+a management "nightmare" if you wish to keep in sync with the master branch.
+The build system is no different.
+
+3. The "Light Touch" Approach.
+I've found taking a "light touch" approach to core project modification is the 
+easy way of maintaining managability of sources between major updates and code changes.
+The main facets of this approach are 
+
+a. Minimal changes to existing source file.
+b. Super/Sub Classing Platfrom functionality
+c. Using Device and vendor Overlays 
+d. Create New Projects to extend existing project while leaving the original untouch
+
+4. Build2 - Build System Extensions
+The Build2 Directory follows the "light touch" approach and provides a wrapper for
+the AOSP envsetup.sh which will allow modification of existing functions and also 
+provides a clean space to add new functionality, while maintain repo sync compatibility
+
+5. Using Build2 
+
+source .build2/envsetup.sh
+
+This will run build/envsetup.sh internally.
