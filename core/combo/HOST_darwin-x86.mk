@@ -81,10 +81,10 @@ endif
 ##### CHOICES CHOICES CHOICES
 ##### IF YOU USE THE PREBUILTS PATH THEN YOU MUST REPLACE THE DARWIN MACH-O ARCH BINARIES 
 ##### WITH THE LINUX ELF VERSION OF THE TOOLCHAIN ######################################
-HOST_TOOLCHAIN_ROOT := prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1
+#HOST_TOOLCHAIN_ROOT := prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1
 
 ##### ALTERNATIVELY YOU CAN JUST CHANGE YOU TOOL CHANGE ROOT
-#HOST_TOOLCHAIN_ROOT := /usr
+HOST_TOOLCHAIN_ROOT := /usr
 #####
 HOST_TOOLCHAIN_PREFIX := $(HOST_TOOLCHAIN_ROOT)/bin/i686-apple-darwin$(gcc_darwin_version)
 # Don't do anything if the toolchain is not there
