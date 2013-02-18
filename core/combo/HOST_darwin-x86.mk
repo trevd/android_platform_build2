@@ -130,7 +130,6 @@ HOST_CUSTOM_LD_COMMAND := true
 
 ## Add the -L/Developer/SDKs/MacOSX10.6.sdk/usr/lib as a lib path so we can resolve
 ## our references
-re
 define transform-host-o-to-shared-lib-inner
  $(PRIVATE_CXX) \
         -dynamiclib -single_module -read_only_relocs suppress \
