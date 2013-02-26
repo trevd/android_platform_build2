@@ -7,4 +7,8 @@ ifeq ($(HOST_OS),linux)
 ifneq ($(USE_DARWIN),)
 	HOST_OS := darwin
 endif
+### pi os probably should be raspbian
+ifneq ($(USE_PI),)
+	HOST_OS := pi
+endif
 endif
