@@ -34,7 +34,7 @@ HOST_C_INCLUDES += /usr/lib/gcc/amd64-mingw32msvc/4.4.2/include
 HOST_GLOBAL_LD_DIRS += -L/usr/amd64-mingw32msvc/lib
 else
 TOOLS_PREFIX := /usr/bin/i686-w64-mingw32-
-HOST_C_INCLUDES += /usr/lib/gcc/i686-w64-mingw32/3.4.4/include
+HOST_C_INCLUDES += /usr/lib/gcc/i686-w64-mingw32/4.6/include
 HOST_GLOBAL_LD_DIRS += -L/usr/i686-w64-mingw32/lib
 endif # BUILD_HOST_64bit
 endif # USE_MINGW
