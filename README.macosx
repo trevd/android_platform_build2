@@ -1,0 +1,43 @@
+Cross Compiling AOSP Tools for OSX using Linux
+----------------------------------------------
+
+At aosp root
+
+sudo mkdir /Developer
+sudo chown $USER.$USER /Developer
+cp build2/osxsdks10.6.tar.gz /Developer
+cd /Developer
+tar -zxvf osxsdks10.6.tar.gz 
+rm osxsdks10.6.tar.gz 
+cd -     # back to aosp root
+cp build2/i686-apple-darwin-4.2.1.tar.gz prebuilts/gcc/linux-x86/host
+cd prebuilts/gcc/linux-x86/host
+tar -zxvf i686-apple-darwin-4.2.1.tar.gz
+cd -
+cd prebuilts/gcc
+rm -rf darwin-x86
+ln -s linux-x86 darwin-x86
+cd -
+# ccache 
+cd prebuilts/misc 
+rm -rf darwin-x86
+ln -s linux-x86 darwin-x86
+cd -
+patch -p1 < build2/build.patch
+
+
+##### sanity check 
+. build/envsetup.sh
+lunch sdk-eng
+make sdk
+
+### time passes 
+
+cd external/zlib
+USE_DARWIN=true mm
+
+
+
+
+
+
