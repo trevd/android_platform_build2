@@ -1,0 +1,76 @@
+diff -Naur a/build/core/combo/HOST_darwin-x86.mk b/build/core/combo/HOST_darwin-x86.mk
+--- a/build/core/combo/HOST_darwin-x86.mk	2013-04-02 07:04:56.467598854 +0100
++++ b/build/core/combo/HOST_darwin-x86.mk	2013-04-02 07:04:39.335714837 +0100
+@@ -67,7 +67,8 @@
+ $(warning *****************************************************)
+ $(error Stop.)
+ endif
+-
++$(info $(mac_sdk_version))
++$(info mac_sdk_root $(mac_sdk_root))
+ ifeq ($(mac_sdk_version),10.6)
+   gcc_darwin_version := 10
+ else
+@@ -76,6 +77,7 @@
+ 
+ HOST_TOOLCHAIN_ROOT := prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1
+ HOST_TOOLCHAIN_PREFIX := $(HOST_TOOLCHAIN_ROOT)/bin/i686-apple-darwin$(gcc_darwin_version)
++
+ # Don't do anything if the toolchain is not there
+ ifneq (,$(strip $(wildcard $(HOST_TOOLCHAIN_PREFIX)-gcc)))
+ HOST_CC  := $(HOST_TOOLCHAIN_PREFIX)-gcc
+@@ -89,7 +91,7 @@
+ HOST_CC := gcc
+ HOST_CXX := g++
+ endif # $(HOST_TOOLCHAIN_PREFIX)-gcc exists
+-HOST_AR := $(AR)
++#HOST_AR := $(AR)
+ HOST_STRIP := $(STRIP)
+ HOST_STRIP_COMMAND = $(HOST_STRIP) --strip-debug $< -o $@
+ 
+@@ -111,7 +113,9 @@
+        HOST_RUN_RANLIB_AFTER_COPYING := true
+        PRE_LION_DYNAMIC_LINKER_OPTIONS := -Wl,-dynamic
+ endif
+-HOST_GLOBAL_ARFLAGS := cqs
++HOST_AR := $(HOST_TOOLCHAIN_PREFIX)-libtool
++HOST_GLOBAL_LD_DIRS += -L/Developer/SDKs/MacOSX10.6.sdk/usr/lib -lobjc
++HOST_GLOBAL_ARFLAGS := -static -arch_only i386 -o
+ 
+ HOST_CUSTOM_LD_COMMAND := true
+ 
+diff -Naur a/build/core/combo/select.mk b/build/core/combo/select.mk
+--- a/build/core/combo/select.mk	2013-04-02 07:04:56.751596930 +0100
++++ b/build/core/combo/select.mk	2013-04-02 07:04:39.331714924 +0100
+@@ -83,6 +83,9 @@
+   ifeq ($(HOST_OS)-$(BUILD_OS),windows-linux)
+     CCACHE_HOST_TAG := linux-$(BUILD_ARCH)
+   endif
++  ifeq ($(HOST_OS)-$(BUILD_OS),darwin-linux)
++    CCACHE_HOST_TAG := linux-$(BUILD_ARCH)
++  endif
+   ccache := prebuilts/misc/$(CCACHE_HOST_TAG)/ccache/ccache
+   # Check that the executable is here.
+   ccache := $(strip $(wildcard $(ccache)))
+@@ -91,6 +94,7 @@
+     ifneq ($(ccache),$(firstword $($(combo_target)CC)))
+       $(combo_target)CC := $(ccache) $($(combo_target)CC)
+     endif
++    
+     ifneq ($(ccache),$(firstword $($(combo_target)CXX)))
+       $(combo_target)CXX := $(ccache) $($(combo_target)CXX)
+     endif
+diff -Naur a/build/core/envsetup.mk b/build/core/envsetup.mk
+--- a/build/core/envsetup.mk	2013-04-02 07:04:56.839596335 +0100
++++ b/build/core/envsetup.mk	2013-04-02 07:04:39.339714799 +0100
+@@ -61,6 +61,9 @@
+ ifneq ($(USE_MINGW),)
+ 	HOST_OS := windows
+ endif
++ifneq ($(USE_DARWIN),)
++	HOST_OS := darwin
++endif
+ endif
+ 
+ ifeq ($(HOST_OS),)
+-*.pyc
