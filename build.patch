@@ -1,3 +1,15 @@
+diff -Naur a/system/core/adb/Android.mk b/system/core/adb/Android.mk
+--- a/system/core/adb/Android.mk	2013-04-02 08:54:02.346674715 +0100
++++ b/system/core/adb/Android.mk	2013-04-02 08:53:22.146951113 +0100
+@@ -22,7 +22,7 @@
+ ifeq ($(HOST_OS),darwin)
+   USB_SRCS := usb_osx.c
+   EXTRA_SRCS := get_my_path_darwin.c
+-  LOCAL_LDLIBS += -lpthread -framework CoreFoundation -framework IOKit -framework Carbon
++  LOCAL_LDLIBS += -lpthread  -lcrypto -framework CoreFoundation -framework IOKit -framework Carbon
+ endif
+ 
+ ifeq ($(HOST_OS),freebsd)
 diff -Naur a/build/core/combo/HOST_darwin-x86.mk b/build/core/combo/HOST_darwin-x86.mk
 --- a/build/core/combo/HOST_darwin-x86.mk	2013-04-02 07:04:56.467598854 +0100
 +++ b/build/core/combo/HOST_darwin-x86.mk	2013-04-02 07:04:39.335714837 +0100
