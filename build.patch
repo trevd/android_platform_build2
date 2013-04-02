@@ -28,14 +28,15 @@ diff -Naur a/build/core/combo/HOST_darwin-x86.mk b/build/core/combo/HOST_darwin-
  HOST_STRIP := $(STRIP)
  HOST_STRIP_COMMAND = $(HOST_STRIP) --strip-debug $< -o $@
  
-@@ -111,7 +113,9 @@
+@@ -111,7 +113,10 @@
         HOST_RUN_RANLIB_AFTER_COPYING := true
         PRE_LION_DYNAMIC_LINKER_OPTIONS := -Wl,-dynamic
  endif
 -HOST_GLOBAL_ARFLAGS := cqs
 +HOST_AR := $(HOST_TOOLCHAIN_PREFIX)-libtool
-+HOST_GLOBAL_LD_DIRS += -L/Developer/SDKs/MacOSX10.6.sdk/usr/lib -lobjc
-+HOST_GLOBAL_ARFLAGS := -static -arch_only i386 -o
++HOST_GLOBAL_LDLIBS += -lobjc -lstdc++.6 -lcrypto 
++HOST_GLOBAL_LD_DIRS += -L/Developer/SDKs/MacOSX10.6.sdk/usr/lib
++HOST_GLOBAL_ARFLAGS := -static -o
  
  HOST_CUSTOM_LD_COMMAND := true
  
@@ -73,4 +74,15 @@ diff -Naur a/build/core/envsetup.mk b/build/core/envsetup.mk
  endif
  
  ifeq ($(HOST_OS),)
+diff -Naur a/build/core/envsetup.mk b/build/core/envsetup.mk
+--- a/build/envsetup.sh     2013-04-02 07:12:29.788279149 +0100
++++ b/build/envsetup.sh     2013-04-02 07:13:48.571700168 +0100
+@@ -1195,5 +1195,5 @@
+     . $f
+ done
+ unset f
+-
++export MAC_SDK_VERSION="10.6"
+ addcompletions
+
 -*.pyc
