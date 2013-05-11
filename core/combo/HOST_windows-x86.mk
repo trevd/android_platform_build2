@@ -29,9 +29,9 @@ HOST_ACP_UNAVAILABLE := true
 TOOLS_EXE_SUFFIX :=
 HOST_GLOBAL_CFLAGS += -DUSE_MINGW
 ifneq ($(strip $(BUILD_HOST_64bit)),)
-TOOLS_PREFIX := /usr/bin/amd64-mingw32msvc-
-HOST_C_INCLUDES += /usr/lib/gcc/amd64-mingw32msvc/4.4.2/include
-HOST_GLOBAL_LD_DIRS += -L/usr/amd64-mingw32msvc/lib
+TOOLS_PREFIX := /usr/bin/x86_64-w64-mingw32-
+HOST_C_INCLUDES += /usr/lib/gcc/x86_64-w64-mingw32/4.6/include
+HOST_GLOBAL_LD_DIRS += -L/usrx86_64-w64-mingw32/lib
 else
 TOOLS_PREFIX := /usr/bin/i686-w64-mingw32-
 HOST_C_INCLUDES += /usr/lib/gcc/i686-w64-mingw32/4.6/include
@@ -40,12 +40,13 @@ endif # BUILD_HOST_64bit
 endif # USE_MINGW
 endif # Linux
 
+
 HOST_CC := $(TOOLS_PREFIX)gcc$(TOOLS_EXE_SUFFIX)
 HOST_CXX := $(TOOLS_PREFIX)g++$(TOOLS_EXE_SUFFIX)
 HOST_AR := $(TOOLS_PREFIX)ar$(TOOLS_EXE_SUFFIX)
 
 HOST_GLOBAL_CFLAGS += -include $(call select-android-config-h,windows)
-HOST_GLOBAL_LDFLAGS += 
+HOST_GLOBAL_LDFLAGS += -W1,--enable-stdcall-fixup
 ifneq ($(strip $(BUILD_HOST_static)),)
 # Statically-linked binaries are desirable for sandboxed environment
 HOST_GLOBAL_LDFLAGS += -static
